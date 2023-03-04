@@ -12,6 +12,7 @@ import { HiOutlineViewGrid } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { MdEditNote } from "react-icons/md";
 import { RxLetterCaseCapitalize } from "react-icons/rx";
+import { useNotes } from "../contexts/NoteContext";
 
 type HeaderProps = {
   view: string,
@@ -19,6 +20,9 @@ type HeaderProps = {
 }
 
 export const Header = ({view, handleChange}: HeaderProps) => {
+
+  const { onDeleteNote, activeNote, onAddNote } = useNotes();
+
   return (
     <AppBar position="static">
       <Grid
@@ -51,6 +55,7 @@ export const Header = ({view, handleChange}: HeaderProps) => {
               </ToggleButton>
             </ToggleButtonGroup>
             <IconButton
+            onClick={() => onDeleteNote(activeNote)}
               sx={{ fontSize: "1.25rem" }}
             >
               <BsTrash />
@@ -59,7 +64,7 @@ export const Header = ({view, handleChange}: HeaderProps) => {
         </Grid>
         <Grid item xs={6}>
           <Box sx={{ display: "flex", gap: "3rem" }}>
-            <IconButton>
+            <IconButton onClick={onAddNote}>
               <MdEditNote />
             </IconButton>
             <IconButton sx={{ paddingLeft: "1rem" }}>
