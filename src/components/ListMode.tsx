@@ -8,7 +8,7 @@ import { ListItem } from "./ListItem";
 import { EditNote } from "./EditNote";
 import {useState} from 'react'
 
-export const ListMode = () => {
+export const ListMode = ({isList}: any) => {
   const {notes} = useNotes()
   const [openMD, setOpenMD] = useState(false)
   return (
@@ -41,7 +41,11 @@ export const ListMode = () => {
           </List>
         </Grid>
         <Grid item xs={12} md={8}>
-          <EditNote setOpenMD={() => setOpenMD(true)} openMD={openMD}/>
+          <EditNote
+          isList={isList}
+          setOpenMD={() => {
+            setOpenMD(true)
+            }} openMD={openMD}/>
         </Grid>
       </Grid>
     </div>

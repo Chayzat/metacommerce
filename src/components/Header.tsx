@@ -6,6 +6,12 @@ import {
   TextField,
   AppBar,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  Button
 } from "@mui/material";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { HiOutlineViewGrid } from "react-icons/hi";
@@ -13,6 +19,7 @@ import { BsTrash } from "react-icons/bs";
 import { MdEditNote } from "react-icons/md";
 import { RxLetterCaseCapitalize } from "react-icons/rx";
 import { useNotes } from "../contexts/NoteContext";
+import { useState } from "react";
 
 type HeaderProps = {
   view: string,
@@ -21,8 +28,20 @@ type HeaderProps = {
 
 export const Header = ({view, handleChange}: HeaderProps) => {
 
-  const { onDeleteNote, activeNote, onAddNote } = useNotes();
+  const { onDeleteNote, activeNote, onAddNote, getActiveNote } = useNotes();
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    onDeleteNote(activeNote)
+    setOpen(false);
+  };
+
+  console.log(getActiveNote)
   return (
     <AppBar position="static">
       <Grid
@@ -55,7 +74,8 @@ export const Header = ({view, handleChange}: HeaderProps) => {
               </ToggleButton>
             </ToggleButtonGroup>
             <IconButton
-            onClick={() => onDeleteNote(activeNote)}
+            // onClick={() => onDeleteNote(activeNote)}
+            onClick={handleClickOpen}
               sx={{ fontSize: "1.25rem" }}
             >
               <BsTrash />
@@ -76,6 +96,32 @@ export const Header = ({view, handleChange}: HeaderProps) => {
           <TextField label="Поиск" variant="outlined" />
         </Grid>
       </Grid>
+      {
+        getActiveNote && (
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Удалить заметку?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {getActiveNote.title}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Отменить</Button>
+            <Button onClick={handleClose} autoFocus>
+              Удалить
+            </Button>
+          </DialogActions>
+        </Dialog>
+        )
+      }
+
     </AppBar>
   );
 };

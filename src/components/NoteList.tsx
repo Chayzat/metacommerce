@@ -13,7 +13,7 @@ export const NoteList = () => {
     <div>
       <Header  view={view} handleChange={handleChange}/>
       <Box sx={{ flexGrow: 1, height:'90vh' }}>
-          {view === "list" ? <ListMode/> : <BlockMode/>}
+          {view === "list" ? <ListMode isList='list'/> : <BlockMode/>}
       </Box>
     </div>
   )
