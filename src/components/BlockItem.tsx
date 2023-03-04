@@ -8,11 +8,18 @@ import ReactMarkdown from "react-markdown";
 import { CardActionArea } from "@mui/material";
 import { useNotes } from "../contexts/NoteContext";
 
-export const BlockItem = ({ note, onActiveBlock }: any) => {
+export const BlockItem = ({ note, onActiveBlock, setOpenMD  }: any) => {
+  const { onSetActiveNote, activeNote } = useNotes();
+
+
+
   return (
     <>
       <Card
-      onClick={onActiveBlock}
+       onClick={() => {
+        setOpenMD()
+        onSetActiveNote(note.id);
+      }}
         sx={{
           backgroundColor: "#0b0a0a",
           borderRadius: "10px",
@@ -33,7 +40,7 @@ export const BlockItem = ({ note, onActiveBlock }: any) => {
           {note.title}
         </Typography>
         <small>
-          {new Date(note.lastModified).toLocaleTimeString("en-GB", {
+          {new Date(note.date).toLocaleTimeString("en-GB", {
             hour: "2-digit",
             minute: "2-digit",
           })}

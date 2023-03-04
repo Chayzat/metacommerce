@@ -15,11 +15,17 @@ import { EditNote } from "./EditNote";
 export const BlockMode = () => {
   const { notes, getActiveNote, findActiveNote, onSetActiveNote } = useNotes();
   const [openMD, setOpenMD] = useState(false);
+
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container sx={{height: '90vh'}}>
-        {<EditNote/>}
-      </Grid>
+
+      {/* <Grid container sx={{height: '90vh'}}>
+        { <EditNote  setOpenMD={() => {
+            setOpenMD(true)
+            }} openMD={openMD}/>}
+      </Grid> */}
       <p>Сегодня</p>
       <Grid
         container
@@ -28,7 +34,12 @@ export const BlockMode = () => {
       >
         {notes.map((note: any) => (
           <Grid item xs={2} sm={4} md={3} key={note.id}>
-              <BlockItem onActiveBlock={() => findActiveNote(note.id) } note={note} />
+            <Link to={`/:${note.id}`}>
+              <BlockItem
+              setOpenMD={() => setOpenMD(false)} openMD={openMD}
+              onActiveBlock={() => findActiveNote(note.id) }
+              note={note} />
+              </Link>
           </Grid>
         ))}
       </Grid>

@@ -23,7 +23,7 @@ import { useState } from "react";
 
 type HeaderProps = {
   view: string,
-  handleChange: (event: React.MouseEvent<HTMLElement>, nextView: string) => void
+  handleChange: (event: React.MouseEvent<HTMLElement>, nextView: string) => void,
 }
 
 export const Header = ({view, handleChange}: HeaderProps) => {
@@ -41,7 +41,6 @@ export const Header = ({view, handleChange}: HeaderProps) => {
     setOpen(false);
   };
 
-  console.log(getActiveNote)
   return (
     <AppBar position="static">
       <Grid
@@ -60,6 +59,9 @@ export const Header = ({view, handleChange}: HeaderProps) => {
               padding: "1rem",
             }}
           >
+            {
+
+            }
             <ToggleButtonGroup
               orientation="horizontal"
               value={view}
@@ -73,6 +75,7 @@ export const Header = ({view, handleChange}: HeaderProps) => {
                 <HiOutlineViewGrid />
               </ToggleButton>
             </ToggleButtonGroup>
+
             <IconButton
             // onClick={() => onDeleteNote(activeNote)}
             onClick={handleClickOpen}

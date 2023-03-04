@@ -1,9 +1,13 @@
 import { Input, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNotes } from "../contexts/NoteContext";
+import { BlockMode } from "./BlockMode";
 import styles from "./EditNote.module.css";
+import { Header } from "./Header";
+import { ListMode } from "./ListMode";
 
 export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
   const { getActiveNote, onEditNote } = useNotes();
@@ -20,7 +24,27 @@ export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
 
   if (!getActiveNote) return <div>Нет заметки</div>;
 
+
+
+  const [view, setView] = useState("list");
+  const handleChange = (event: React.MouseEvent<HTMLElement>,nextView: string) =>  {
+    setView(nextView);
+  };
+
+
+
   return (
+    <>
+    {/* {
+      !isList && (
+        <>
+        <Header  view={view} handleChange={handleChange}/>
+        <Box sx={{ flexGrow: 1, height:'90vh' }}>
+            {view === "list" ? <ListMode isList='list'/> : <BlockMode/>}
+        </Box>
+        </>
+      )
+    } */}
     <div style={{display: 'flex', flexDirection: 'column', height: '85vh', width: '100%'}}>
       <p style={{ textAlign: "center" }}>
         {new Date(getActiveNote.date).toLocaleDateString("en-GB", {
@@ -30,7 +54,8 @@ export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
       </p>
       <div
         onClick={setOpenMD}
-        style={{ display: openMD === false ? "block" : "none", height: "85vh" }}
+        style={{ display: (openMD === false) ? "block" : "none", height: "85vh" }}
+        // style={{ display: (openMD === false ) ? "block" : "none" }}
       >
         <ReactMarkdown className={styles.color}>
           {getActiveNote.body}
@@ -58,5 +83,6 @@ export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
         />
       </div>
     </div>
+    </>
   );
 };
