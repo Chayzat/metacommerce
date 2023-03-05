@@ -1,21 +1,17 @@
 .color {
-    overflow-x: scroll;
+  overflow-x: scroll;
 }
-/* Работает в Firefox */
+*::-webkit-scrollbar {
+  width: 10px;
+}
 
-
-  /* Работает в Chrome, Edge и Safari */
-  *::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: inherit;
+*::-webkit-scrollbar-track {
+  background: inherit;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgb(113, 113, 113);
-    height: 5px;
-    width: 5px;
-    border: none;
-  }
+  background-color: rgb(113, 113, 113);
+  height: 5px;
+  width: 5px;
+  border: none;
+}

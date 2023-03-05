@@ -3,40 +3,36 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, createTheme, Container } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { NoteProvider } from "./contexts/NoteContext";
-import { EditNote } from "./components/EditNote";
 import { EditNoteBlock } from "./components/EditNoteBlock";
 import { ToggleProvider, useToggle } from "./contexts/ToggleContext";
+import { BlockMode } from "./components/BlockMode";
+import { Header } from "./components/Header";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
+  typography: {
+    fontFamily: [
+        'San Francisco',
+        'sans-serif',
+      ].join(','),
+  }
 });
 
 function App() {
-  // const { openMD, setOpenMD } = useToggle();
-
-  // console.log(openMD)
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <ToggleProvider>
         <NoteProvider>
-          <Container>
+          <Container >
+            <Header/>
             <Routes>
               <Route path="/" element={<NoteList />} />
-              <Route
-                path="/:id"
-                element={
-                  <EditNoteBlock
-
-                    // setOpenMD={() => {
-                    //   setOpenMD(true);
-                    // }}
-                    // openMD={openMD}
-                  />
-                }
-              />
+              <Route path="/lists" element={<NoteList />} />
+              <Route path="/blocks" element={<BlockMode />} />
+              <Route path="/blocks/:id" element={<EditNoteBlock/>}/>
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Container>

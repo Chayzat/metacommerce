@@ -1,32 +1,16 @@
-import { Box, Grid } from "@mui/material";
-import React, { useState } from "react";
-import { useNotes } from "../contexts/NoteContext";
+import { Grid } from "@mui/material";
 import { EditNote } from "./EditNote";
 import { Header } from "./Header";
-import {Link} from 'react-router-dom'
-import { ListMode } from "./ListMode";
-import { BlockMode } from "./BlockMode";
+import { useToggle } from "../contexts/ToggleContext";
 
-export const EditNoteBlock = ({ setOpenMD, openMD }: any) => {
-  const [view, setView] = useState("list");
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
-    nextView: string
-  ) => {
-    setView(nextView);
-  };
-
-  const { notes, getActiveNote, findActiveNote, onSetActiveNote } = useNotes();
+export const EditNoteBlock = () => {
+  const { openMD, setOpenMD } = useToggle();
   return (
     <div>
-      <Header view={view} handleChange={handleChange} />
       <Grid container sx={{ height: "90vh" }}>
-        <Link to={'/'}>
-        back
-        </Link>
         {
           <EditNote
-            ssetOpenMD={() => {
+            setOpenMD={() => {
               setOpenMD(true);
             }}
             openMD={openMD}

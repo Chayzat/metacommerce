@@ -6,14 +6,11 @@ import {
 import { useNotes } from "../contexts/NoteContext";
 import { ListItem } from "./ListItem";
 import { EditNote } from "./EditNote";
-import {useState} from 'react'
 import { useToggle } from "../contexts/ToggleContext";
 
 export const ListMode = ({isList}: any) => {
-  const {notes} = useNotes()
+  const {onFilteredNotes} = useNotes()
   const {openMD, setOpenMD} = useToggle()
-  // const [openMD, setOpenMD] = useState(false)
-
 
   return (
     <div>
@@ -39,7 +36,7 @@ export const ListMode = ({isList}: any) => {
               </ListSubheader>
             }
           >
-            {notes.map((note: any) => (
+            {onFilteredNotes.map((note: any) => (
              <ListItem setOpenMD={() => setOpenMD(false)}  note={note} key={note.id}/>
             ))}
           </List>

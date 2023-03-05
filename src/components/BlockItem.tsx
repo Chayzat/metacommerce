@@ -1,23 +1,17 @@
-import { experimentalStyled as styled } from "@mui/material/styles";
-import { Box, Paper, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import ReactMarkdown from "react-markdown";
 import { CardActionArea } from "@mui/material";
 import { useNotes } from "../contexts/NoteContext";
 
-export const BlockItem = ({ note, onActiveBlock, setOpenMD  }: any) => {
-  const { onSetActiveNote, activeNote } = useNotes();
-
-
+export const BlockItem = ({ note }: any) => {
+  const { onSetActiveNote } = useNotes();
 
   return (
     <>
       <Card
        onClick={() => {
-        setOpenMD()
         onSetActiveNote(note.id);
       }}
         sx={{

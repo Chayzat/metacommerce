@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 
@@ -18,6 +18,7 @@ export type NoteData = {
 export const NoteProvider = ({ children }: any) => {
   const [notes, setNotes] = useLocalStorage<any>("notes", []);
   const [activeNote, setActiveNote] = useState("");
+  const [title, setTitle] = useState("");
 
   const onSetActiveNote = (id: string) => {
     setActiveNote(id);
@@ -52,6 +53,12 @@ export const NoteProvider = ({ children }: any) => {
     setNotes(notes.filter((note: any) => note.id !== id));
   };
 
+  const onFilteredNotes = useMemo(() => {
+    return notes.filter((note: any) => {
+      return title === '' || note.title.toLowerCase().includes(title.toLowerCase())
+    })
+  }, [title, notes])
+
   return (
     <NoteContext.Provider
       value={{
@@ -62,6 +69,9 @@ export const NoteProvider = ({ children }: any) => {
         getActiveNote,
         onEditNote,
         onDeleteNote,
+        title,
+        setTitle,
+        onFilteredNotes
       }}
     >
       {children}

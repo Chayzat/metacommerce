@@ -1,15 +1,13 @@
 import { ListItemText, ListItemButton } from "@mui/material";
 import { useNotes } from "../contexts/NoteContext";
 
-
 export const ListItem = ({note, setOpenMD}: any) => {
-  const { onSetActiveNote, activeNote } = useNotes();
+  const { onSetActiveNote } = useNotes();
 
   return (
     <ListItemButton
       key={note.id}
       sx={{
-        borderBottom: activeNote === note.id ? "1px solid #f9c20cbd" : "none",
         height: "5rem",
       }}
       onClick={() => {
@@ -18,6 +16,7 @@ export const ListItem = ({note, setOpenMD}: any) => {
       }}
     >
       <ListItemText primary={`${note.title}`} sx={{ position: "relative" }} />
+
       <div
         style={{
           position: "absolute",
