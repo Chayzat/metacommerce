@@ -5,18 +5,7 @@ import { useNotes } from "../contexts/NoteContext";
 import styles from "./EditNote.module.css";
 
 export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
-  const { getActiveNote, onEditNote, onBodySelection } = useNotes();
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
-  const onEditField = (value: string) => {
-    onEditNote({
-      ...getActiveNote,
-      title:
-        value.length > 0 ? String(value).substring(0, 20) : "Без заголовка",
-      body: value,
-      date: Date.now(),
-    });
-  };
-
+  const { getActiveNote, bodyRef, onEditField } = useNotes();
   if (!getActiveNote) return <div>Нет заметки</div>;
 
   return (
@@ -42,7 +31,6 @@ export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
       >
         <TextField
         inputRef={bodyRef}
-        onSelect={() =>onBodySelection(bodyRef)}
           multiline
           minRows={5}
           maxRows={30}

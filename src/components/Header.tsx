@@ -5,28 +5,23 @@ import {
   TextField,
   AppBar,
   Box,
-  Dialog,
-  DialogTitle,
-  DialogContentText,
-  DialogContent,
-  DialogActions,
-  Button,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
-  SelectChangeEvent,
+  Select,
+  NativeSelect,
 } from "@mui/material";
+
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { MdEditNote } from "react-icons/md";
-import { RxLetterCaseCapitalize } from "react-icons/rx";
 import { useNotes } from "../contexts/NoteContext";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToggle } from "../contexts/ToggleContext";
+import { DeleteModal } from "./DeleteModal";
 
 export const Header = () => {
   const {
@@ -36,6 +31,8 @@ export const Header = () => {
     getActiveNote,
     title,
     setTitle,
+    bodyRef,
+    onEditField,
   } = useNotes();
   const { setOpenMD } = useToggle();
 
@@ -52,12 +49,12 @@ export const Header = () => {
 
   const history = useNavigate();
 
+  const formatOptions = ["aa", "AA"];
+  const [formatValue, setFormatValue] = useState("");
 
-  const [formatCase, setFormatCase] = useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setFormatCase(event.target.value);
-  };
+  const options = formatOptions.map((text, index) => {
+    return <option key={index}>{text}</option>;
+  });
 
   return (
     <AppBar position="static">
@@ -117,20 +114,36 @@ export const Header = () => {
             <IconButton onClick={onAddNote}>
               <MdEditNote />
             </IconButton>
-            {/* <IconButton sx={{ paddingLeft: "1rem" }}>
-              <RxLetterCaseCapitalize />
-            </IconButton> */}
-            <FormControl sx={{width: '20%'}}>
-              <InputLabel id="demo-simple-select-label">Aa</InputLabel>
-              <Select
-                value={formatCase}
-                label="Aa"
-                onChange={handleChange}
+            <FormControl sx={{ width: "20%" }}>
+              <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Aa
+              </InputLabel>
+              <NativeSelect
+              id="uncontrolled-native"
+                value={formatValue}
+                onChange={(e) => {
+                  setFormatValue(e.target.value);
+                  if (
+                    bodyRef.current.selectionStart ==
+                    bodyRef.current.selectionEnd
+                  ) {
+                    return;
+                  }
+                  let selected = bodyRef.current.value.slice(
+                    bodyRef.current.selectionStart,
+                    bodyRef.current.selectionEnd
+                  );
+                  if (formatValue == "aa") {
+                    bodyRef.current.setRangeText(selected.toUpperCase());
+                  }
+                  if (formatValue == "AA") {
+                    bodyRef.current.setRangeText(selected.toLowerCase());
+                  }
+                  onEditField(bodyRef.current.value);
+                }}
               >
-                <MenuItem value={'lowercase'}>аа</MenuItem>
-                <MenuItem value={'uppercase'}>АА</MenuItem>
-                <MenuItem value={'pascalcase'}>АаА</MenuItem>
-              </Select>
+                {options}
+              </NativeSelect>
             </FormControl>
           </Box>
         </Grid>
@@ -147,27 +160,7 @@ export const Header = () => {
         </Grid>
       </Grid>
       {getActiveNote && (
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Удалить заметку?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Хотите удалить последний выбранный элемент -{getActiveNote.title}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpen(false)}>Отменить</Button>
-            <Button onClick={handleClose} autoFocus>
-              Удалить
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <DeleteModal open={open} handleClose={handleClose} setOpen={setOpen} />
       )}
     </AppBar>
   );
