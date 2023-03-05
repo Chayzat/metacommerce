@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
+import { SelectChangeEvent } from "@mui/material";
 
 const NoteContext = createContext<any>(null);
 
@@ -19,6 +20,20 @@ export const NoteProvider = ({ children }: any) => {
   const [notes, setNotes] = useLocalStorage<any>("notes", []);
   const [activeNote, setActiveNote] = useState("");
   const [title, setTitle] = useState("");
+
+  const [formatCase, setFormatCase] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setFormatCase(event.target.value as string);
+  };
+
+  const onBodySelection = (value: any) => {
+    let textVal = value.current;
+    let cursorStart = textVal.selectionStart;
+    let cursorEnd = textVal.selectionEnd;
+    let selected = getActiveNote.body.substring(cursorStart,cursorEnd)
+    console.log(selected)
+  }
 
   const onSetActiveNote = (id: string) => {
     setActiveNote(id);
@@ -71,7 +86,8 @@ export const NoteProvider = ({ children }: any) => {
         onDeleteNote,
         title,
         setTitle,
-        onFilteredNotes
+        onFilteredNotes,
+        onBodySelection
       }}
     >
       {children}

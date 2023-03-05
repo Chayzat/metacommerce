@@ -11,6 +11,11 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
@@ -24,7 +29,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToggle } from "../contexts/ToggleContext";
 
 export const Header = () => {
-  const { onDeleteNote, activeNote, onAddNote, getActiveNote, title, setTitle } = useNotes();
+  const {
+    onDeleteNote,
+    activeNote,
+    onAddNote,
+    getActiveNote,
+    title,
+    setTitle,
+  } = useNotes();
   const { setOpenMD } = useToggle();
 
   const [open, setOpen] = useState(false);
@@ -39,6 +51,13 @@ export const Header = () => {
   };
 
   const history = useNavigate();
+
+
+  const [formatCase, setFormatCase] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setFormatCase(event.target.value);
+  };
 
   return (
     <AppBar position="static">
@@ -58,19 +77,22 @@ export const Header = () => {
               padding: "1rem",
             }}
           >
-            {}
             <ToggleButtonGroup orientation="horizontal" exclusive>
               <Link to={"/lists"}>
-                <IconButton onClick={() => {
-                  setOpenMD(false)
-                  }}>
+                <IconButton
+                  onClick={() => {
+                    setOpenMD(false);
+                  }}
+                >
                   <AiOutlineUnorderedList />
                 </IconButton>
               </Link>
               <Link to={"/blocks"}>
-              <IconButton onClick={() => {
-                  setOpenMD(false)
-                  }}>
+                <IconButton
+                  onClick={() => {
+                    setOpenMD(false);
+                  }}
+                >
                   <HiOutlineViewGrid />
                 </IconButton>
               </Link>
@@ -95,20 +117,32 @@ export const Header = () => {
             <IconButton onClick={onAddNote}>
               <MdEditNote />
             </IconButton>
-            <IconButton sx={{ paddingLeft: "1rem" }}>
+            {/* <IconButton sx={{ paddingLeft: "1rem" }}>
               <RxLetterCaseCapitalize />
-            </IconButton>
+            </IconButton> */}
+            <FormControl sx={{width: '20%'}}>
+              <InputLabel id="demo-simple-select-label">Aa</InputLabel>
+              <Select
+                value={formatCase}
+                label="Aa"
+                onChange={handleChange}
+              >
+                <MenuItem value={'lowercase'}>аа</MenuItem>
+                <MenuItem value={'uppercase'}>АА</MenuItem>
+                <MenuItem value={'pascalcase'}>АаА</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
         </Grid>
         <Grid item xs={2}>
           <TextField
-          label="Поиск"
-          variant="outlined"
-          value={title}
-          type='text'
-          onChange={(e) => {
-            setTitle(e.target.value)
-          }}
+            label="Поиск"
+            variant="outlined"
+            value={title}
+            type="text"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           />
         </Grid>
       </Grid>
@@ -124,8 +158,7 @@ export const Header = () => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Хотите удалить последний выбранный элемент -
-              {getActiveNote.title}
+              Хотите удалить последний выбранный элемент -{getActiveNote.title}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

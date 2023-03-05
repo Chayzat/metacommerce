@@ -1,11 +1,12 @@
 import { TextField } from "@mui/material";
+import { createRef, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNotes } from "../contexts/NoteContext";
 import styles from "./EditNote.module.css";
 
 export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
-  const { getActiveNote, onEditNote } = useNotes();
-
+  const { getActiveNote, onEditNote, onBodySelection } = useNotes();
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
   const onEditField = (value: string) => {
     onEditNote({
       ...getActiveNote,
@@ -40,6 +41,8 @@ export const EditNote = ({ setOpenMD, openMD, isList }: any) => {
         style={{ display: openMD === false ? "none" : "block" }}
       >
         <TextField
+        inputRef={bodyRef}
+        onSelect={() =>onBodySelection(bodyRef)}
           multiline
           minRows={5}
           maxRows={30}
