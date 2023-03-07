@@ -115,11 +115,7 @@ export const Header = () => {
               <MdEditNote />
             </IconButton>
             <FormControl sx={{ width: "20%" }}>
-              <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Aa
-              </InputLabel>
               <NativeSelect
-              id="uncontrolled-native"
                 value={formatValue}
                 onChange={(e) => {
                   setFormatValue(e.target.value);

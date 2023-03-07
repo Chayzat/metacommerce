@@ -30,7 +30,7 @@ export const ListItem = ({note, setOpenMD}: any) => {
             minute: '2-digit'
           })}
         </small>
-        <small> {note.body ? note.body.substr(0, 40) + "..." : 'нет дополнительного текста'}</small>
+        <small> {note.body ? note.body.substr(0, 35) + "..." : 'нет дополнительного текста'}</small>
       </div>
     </ListItemButton>
   );

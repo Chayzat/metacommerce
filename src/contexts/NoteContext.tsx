@@ -19,7 +19,9 @@ export const NoteProvider = ({ children }: any) => {
   const [notes, setNotes] = useLocalStorage<any>("notes", []);
   const [activeNote, setActiveNote] = useState("");
   const [title, setTitle] = useState("");
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
+  notes.sort((a: any, b: any) => b.date - a.date)
 
   const onBodySelection = (value: any) => {
     let cursorStart = value.current.selectionStart;
@@ -65,8 +67,6 @@ export const NoteProvider = ({ children }: any) => {
       return title === '' || note.title.toLowerCase().includes(title.toLowerCase())
     })
   }, [title, notes])
-
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   const onEditField = (value: string) => {
     onEditNote({
