@@ -6,9 +6,6 @@ import {
   AppBar,
   Box,
   FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   NativeSelect,
 } from "@mui/material";
 
@@ -34,7 +31,7 @@ export const Header = () => {
     bodyRef,
     onEditField,
   } = useNotes();
-  const { setOpenMD } = useToggle();
+  const { setSelected } = useToggle();
 
   const [open, setOpen] = useState(false);
 
@@ -78,7 +75,7 @@ export const Header = () => {
               <Link to={"/lists"}>
                 <IconButton
                   onClick={() => {
-                    setOpenMD(false);
+                    setSelected(true);
                   }}
                 >
                   <AiOutlineUnorderedList />
@@ -87,7 +84,7 @@ export const Header = () => {
               <Link to={"/blocks"}>
                 <IconButton
                   onClick={() => {
-                    setOpenMD(false);
+                    setSelected(true);
                   }}
                 >
                   <HiOutlineViewGrid />
@@ -97,7 +94,7 @@ export const Header = () => {
               <IconButton
                 onClick={() => {
                   history(-1);
-                  setOpenMD(false);
+                  setSelected(true);
                 }}
               >
                 <IoIosArrowBack />

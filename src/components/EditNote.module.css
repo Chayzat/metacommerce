@@ -1,5 +1,9 @@
 .color {
   overflow-x: scroll;
+  height: 85vh;
+}
+.close {
+  display: none;
 }
 *::-webkit-scrollbar {
   width: 10px;

@@ -1,23 +1,20 @@
-import { NoteList } from "./components/NoteList";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider, createTheme, Container } from "@mui/material";
+import { ThemeProvider, createTheme, Container, Box } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { NoteProvider } from "./contexts/NoteContext";
-import { EditNoteBlock } from "./components/EditNoteBlock";
-import { ToggleProvider, useToggle } from "./contexts/ToggleContext";
+import { ToggleProvider} from "./contexts/ToggleContext";
 import { BlockMode } from "./components/BlockMode";
 import { Header } from "./components/Header";
+import { ListMode } from "./components/ListMode";
+import { EditNote } from "./components/EditNote";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
   typography: {
-    fontFamily: [
-        'San Francisco',
-        'sans-serif',
-      ].join(','),
-  }
+    fontFamily: ["San Francisco", "sans-serif"].join(","),
+  },
 });
 
 function App() {
@@ -26,15 +23,17 @@ function App() {
       <CssBaseline />
       <ToggleProvider>
         <NoteProvider>
-          <Container >
-            <Header/>
-            <Routes>
-              <Route path="/" element={<NoteList />} />
-              <Route path="/lists" element={<NoteList />} />
-              <Route path="/blocks" element={<BlockMode />} />
-              <Route path="/blocks/:id" element={<EditNoteBlock/>}/>
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+          <Container>
+            <Header />
+            <Box sx={{ flexGrow: 1, height: "90vh" }}>
+              <Routes>
+                <Route path="/" element={<ListMode />} />
+                <Route path="/lists" element={<ListMode />} />
+                <Route path="/blocks" element={<BlockMode />} />
+                <Route path="/blocks/:id" element={<EditNote />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </Box>
           </Container>
         </NoteProvider>
       </ToggleProvider>

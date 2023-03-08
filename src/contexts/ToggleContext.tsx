@@ -7,14 +7,9 @@ export function useToggle() {
 }
 
 export const ToggleProvider = ({children}: any) => {
-  const [openMD, setOpenMD] = useState(false)
-
-  const onSetOpenMD = (value: any) => {
-    setOpenMD(value)
-  }
-
+  const [selected, setSelected] = useState(false);
   return (
-    <ToggleContext.Provider value={{openMD, setOpenMD,  onSetOpenMD}}>
+    <ToggleContext.Provider value={{selected, setSelected}}>
       {children}
     </ToggleContext.Provider>
   )

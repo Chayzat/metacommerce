@@ -1,5 +1,5 @@
 import { useNotes } from "../contexts/NoteContext";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Link} from "react-router-dom";
 import { BlockItem } from "./BlockItem";
 export const BlockMode = () => {
@@ -7,7 +7,6 @@ export const BlockMode = () => {
 
   return (
     <>
-    <Box sx={{ flexGrow: 1 }}>
       <p>Сегодня</p>
       <Grid
         container
@@ -22,7 +21,6 @@ export const BlockMode = () => {
           </Grid>
         ))}
       </Grid>
-    </Box>
     </>
   );
 };

@@ -6,15 +6,12 @@ import {
 import { useNotes } from "../contexts/NoteContext";
 import { ListItem } from "./ListItem";
 import { EditNote } from "./EditNote";
-import { useToggle } from "../contexts/ToggleContext";
 
 export const ListMode = ({isList}: any) => {
   const {onFilteredNotes} = useNotes()
-  const {openMD, setOpenMD} = useToggle()
 
   return (
-    <div>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} >
         <Grid item xs={12} md={4}>
           <List
             sx={{
@@ -37,20 +34,13 @@ export const ListMode = ({isList}: any) => {
             }
           >
             {onFilteredNotes.map((note: any) => (
-             <ListItem setOpenMD={() => setOpenMD(false)}  note={note} key={note.id}/>
+             <ListItem note={note} key={note.id}/>
             ))}
           </List>
         </Grid>
-        <Grid item xs={12} md={8}>
-          <EditNote
-          isList={isList}
-          setOpenMD={() => {
-            setOpenMD(true)
-            }}
-            openMD={openMD}
-            />
+        <Grid item xs={12} sm={4} md={8}>
+          <EditNote/>
         </Grid>
       </Grid>
-    </div>
   )
 }

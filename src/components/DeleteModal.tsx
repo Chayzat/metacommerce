@@ -1,10 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
-import React from 'react'
 import { useNotes } from '../contexts/NoteContext'
 
 export const DeleteModal = ({open, handleClose, setOpen}: any) => {
-
-    const {getActiveNote} = useNotes()
+  const {getActiveNote} = useNotes()
 
   return (
     <Dialog

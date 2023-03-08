@@ -1,14 +1,16 @@
 import {Card, CardContent, Typography, CardActionArea} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import { useNotes } from "../contexts/NoteContext";
+import { useToggle } from "../contexts/ToggleContext";
 
 export const BlockItem = ({ note }: any) => {
   const { onSetActiveNote } = useNotes();
-
+  const {setSelected} = useToggle()
   return (
     <>
       <Card
-       onClick={() => {
+      onClick={() => {
+        setSelected(false)
         onSetActiveNote(note.id);
       }}
         sx={{
